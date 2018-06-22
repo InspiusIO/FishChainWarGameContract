@@ -10,13 +10,13 @@ contract FishBase is Ownable, PullPayment {
 	constructor() public {}
 
 	//@dev this game's round.
-	uint256 round = 0;
+	uint256 public round = 0;
 
 	//@dev this round's end time.
 	uint256 public endTime;
 	
 	//@dev a round time. 15 minutes.
-	uint256 public roundTime = 15 * 60;
+	uint256 roundTime = 15 * 60;
 	
 	//@dev total round price
 	uint256 public totalRoundPrice = 0;
@@ -28,23 +28,20 @@ contract FishBase is Ownable, PullPayment {
 	uint256 public currentLeaderBonusPrice = 0 ether;
 
 	//@dev 20% of total prev game size will be next Leader Bonus, start at 0 ether.
-	uint256 public nextLeaderBonusPrice = 0 ether;
+	uint256 nextLeaderBonusPrice = 0 ether;
 
 	//@dev List of all players in this round.
     mapping(address => Player) internal players;
 
-	//@dev eventEndRound event is emitted whenever a admin end this round.
-    event eventEndRound(
+	//@dev eventStartNewRound event is emitted whenever a new round is started.
+    event eventStartNewRound(
         uint256 nextRound,
-        uint256 nextEndTime,
-        uint256 leaderBonusPrice
+        uint256 nextEndTime
     );
 
 	//@dev eventCreatePlayer event is emitted whenever a playe is created.
     event eventCreatePlayer(
-        uint256 nextRound,
-        uint256 nextEndTime,
-        uint256 leaderBonusPrice
+        address playerAddress
     );
 	
 	//@dev When a Player is created, player can start joining this game's round

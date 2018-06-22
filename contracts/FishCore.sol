@@ -30,6 +30,9 @@ contract FishCore is FishBase {
 
 		//@dev use leader bonus price as start total round price
 		totalRoundPrice = currentLeaderBonusPrice;
+
+		//emit started new round event
+		emit eventStartNewRound(round, endTime);
 	}
 
 	//@dev end current round and start the new one, only onwer can.
@@ -75,6 +78,6 @@ contract FishCore is FishBase {
 		addTotalRoundPrice(player.playerValue);
 		
 		//@dev emit created player event
-		eventCreatePlayer(msg.sender);
+		emit eventCreatePlayer(msg.sender);
     }
 }
