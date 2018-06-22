@@ -19,19 +19,29 @@ contract FishBase is Ownable, PullPayment {
 	uint256 public roundTime = 15 * 60;
 	
 	//@dev total round price
-	uint256 totalRoundPrice = 0;
+	uint256 public totalRoundPrice = 0;
 
 	//@dev Base price to join this game.
-	uint256 basePrice = 0.01 ether;
+	uint256 public basePrice = 0.01 ether;
+	
+	//@dev current leader bonus price. start at 0 ether
+	uint256 public currentLeaderBonusPrice = 0 ether;
 
 	//@dev 20% of total prev game size will be next Leader Bonus, start at 0 ether.
-	uint256 leaderBonusPrice = 0 ether;
+	uint256 public nextLeaderBonusPrice = 0 ether;
 
 	//@dev List of all players in this round.
     mapping(address => Player) internal players;
 
 	//@dev eventEndRound event is emitted whenever a admin end this round.
     event eventEndRound(
+        uint256 nextRound,
+        uint256 nextEndTime,
+        uint256 leaderBonusPrice
+    );
+
+	//@dev eventCreatePlayer event is emitted whenever a playe is created.
+    event eventCreatePlayer(
         uint256 nextRound,
         uint256 nextEndTime,
         uint256 leaderBonusPrice
@@ -60,9 +70,9 @@ contract FishBase is Ownable, PullPayment {
     }
 
 	//@dev helper to add amount to leader bonus
-	function addLeaderBonus(uint256 amount) internal returns(uint256) {
-		leaderBonusPrice = SafeMath.add(leaderBonusPrice, amount);
-        return leaderBonusPrice;
+	function addNextLeaderBonus(uint256 amount) internal returns(uint256) {
+		nextLeaderBonusPrice = SafeMath.add(nextLeaderBonusPrice, amount);
+        return nextLeaderBonusPrice;
     }
 
 	//@dev helper to add amount to total round price
