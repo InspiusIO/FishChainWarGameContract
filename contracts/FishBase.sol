@@ -30,6 +30,13 @@ contract FishBase is Ownable, PullPayment {
 	//@dev When a Player is created, player can start joining this game's round
     //until the round is ended. The player's value will start at 0.01 ether 
 	//and increase when a player killed a another player.
+
+	//@dev eventEndRound event is emitted whenever a admin end this round.
+    event eventEndRound(
+        uint256 nextRound,
+        uint256 nextEndTime,
+        uint256 leaderBonusPrice
+    );
 	struct Player {
 		
 		//@dev the player's address
