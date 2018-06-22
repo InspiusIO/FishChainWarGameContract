@@ -1,0 +1,25 @@
+{
+  "name": "fishwarcontract",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://ndtuan89@github.com/InspiusIO/FishWarChainContract.git"
+  },
+  "author": "Inspius",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/InspiusIO/FishWarChainContract/issues"
+  },
+  "homepage": "https://github.com/InspiusIO/FishWarChainContract#readme",
+  "dependencies": {
+    "openzeppelin-solidity": "^1.10.0"
+  }
+}

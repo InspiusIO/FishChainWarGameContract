@@ -1,0 +1,174 @@
+{
+  "contractName": "FishCore",
+  "abi": [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a7230582074c2a60b1d4b169e6b9454e5d856f5f88506250a90657f5cf1ece89e8a8797cb0029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a7230582074c2a60b1d4b169e6b9454e5d856f5f88506250a90657f5cf1ece89e8a8797cb0029",
+  "sourceMap": "156:43:1:-;;;178:19;8:9:-1;5:2;;;30:1;27;20:12;5:2;178:19:1;156:43;;;;;;",
+  "deployedSourceMap": "156:43:1:-;;;;;",
+  "source": "pragma solidity ^0.4.22;\n\n/// @title Base Contract for FishWarChain. Holds all functions related to the pool.\n/// @author Inspius (https://www.inspius.com)\ncontract FishCore {\n  constructor() {\n  }\n}\n",
+  "sourcePath": "/Applications/MAMP/htdocs/FishWarChainContract/contracts/FishCore.sol",
+  "ast": {
+    "absolutePath": "/Applications/MAMP/htdocs/FishWarChainContract/contracts/FishCore.sol",
+    "exportedSymbols": {
+      "FishCore": [
+        45
+      ]
+    },
+    "id": 46,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 40,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".22"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:1"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title Base Contract for FishWarChain. Holds all functions related to the pool.\n @author Inspius (https://www.inspius.com)",
+        "fullyImplemented": true,
+        "id": 45,
+        "linearizedBaseContracts": [
+          45
+        ],
+        "name": "FishCore",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 43,
+              "nodeType": "Block",
+              "src": "192:5:1",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 44,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 41,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "189:2:1"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 42,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "192:0:1"
+            },
+            "scope": 45,
+            "src": "178:19:1",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 46,
+        "src": "156:43:1"
+      }
+    ],
+    "src": "0:200:1"
+  },
+  "legacyAST": {
+    "absolutePath": "/Applications/MAMP/htdocs/FishWarChainContract/contracts/FishCore.sol",
+    "exportedSymbols": {
+      "FishCore": [
+        45
+      ]
+    },
+    "id": 46,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 40,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".22"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:1"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title Base Contract for FishWarChain. Holds all functions related to the pool.\n @author Inspius (https://www.inspius.com)",
+        "fullyImplemented": true,
+        "id": 45,
+        "linearizedBaseContracts": [
+          45
+        ],
+        "name": "FishCore",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 43,
+              "nodeType": "Block",
+              "src": "192:5:1",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 44,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 41,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "189:2:1"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 42,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "192:0:1"
+            },
+            "scope": 45,
+            "src": "178:19:1",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 46,
+        "src": "156:43:1"
+      }
+    ],
+    "src": "0:200:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2018-06-22T03:45:12.396Z"
+}
