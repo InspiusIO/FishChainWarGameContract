@@ -21,7 +21,7 @@ contract FishBase is Ownable, PullPayment {
 	//@dev Base price to join this game.
 	uint256 basePrice = 0.01 ether;
 
-	//@dev 20% of total prev game size will be next Leader Bonus, start at 0.
+	//@dev 20% of total prev game size will be next Leader Bonus, start at 0 ether.
 	uint256 leaderBonusPrice = 0 ether;
 
 	//@dev List of all players in this round.
@@ -45,7 +45,7 @@ contract FishBase is Ownable, PullPayment {
 		//@dev the player's round
         uint256 round;
 		
-		//@dev the player's value. It should start at 0.01
+		//@dev the player's value. It should start at 0.01 ether
         uint256 value;
     }
 }
