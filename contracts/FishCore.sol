@@ -89,22 +89,29 @@ contract FishCore is FishBase {
 		//emit started new round event
 		emit eventStartNewRound(round, endTime);
 	}
-	
-	//@dev create player to join this round.
-    //@return player id in the contract.
-    function createPlayer()
+
+	//@dev buy a fish to join the game
+	function buy()
         public
         payable
+        returns(uint256)
     {
-		require(msg.value == basePrice);
+        createPlayer(msg.value);
+    }
+	
+	//@dev create player to join this round.
+    function createPlayer(uint256 incomingEthereum)
+        internal
+    {
+		require(incomingEthereum == basePrice);
 		require(now <= endTime);
 
 		//@dev cut the dev fee
-		uint256 devFee = getDevFee(msg.value);
+		uint256 devFee = getDevFee(incomingEthereum);
 		asyncSend(owner, devFee);
 
 		//@dev cut the leader bonus fee to next round
-		uint256 leaderBonusFee = getLeaderBonusFee(msg.value);		
+		uint256 leaderBonusFee = getLeaderBonusFee(incomingEthereum);		
 		addNextLeaderBonus(leaderBonusFee);
 		
 		Player storage player = players[msg.sender];
@@ -124,5 +131,13 @@ contract FishCore is FishBase {
 		
 		//@dev emit created player event
 		emit eventCreatePlayer(msg.sender, player.playerValue);
+    }
+	
+	//@dev fallback function to handle ethereum that was send straight to the contract
+	function()
+        payable
+        public
+    {
+        createPlayer(msg.value);
     }
 }
