@@ -9,7 +9,62 @@ contract FishCore is FishBase {
 	constructor() public {
 	}
 
-	//@dev start a new round, only onwer can.
+	//@dev end player game and transfer the reward, only owner .
+	//all players need update the value before can endRound()
+	function endPlayerGame(address playerAddress, uint256 playerValue)
+		public
+		onlyOwner
+	{
+		require(now > endTime);
+		require(playerValue > 0);
+		require(players[playerAddress].playerRound == round);
+
+		Player storage player = players[playerAddress];
+
+		//@dev check the player round and current playerValue
+		if(player.playerRound == round && player.playerValue >= playerValue) {
+			
+			//@dev update the player value and send reward
+			player.playerValue = playerValue;
+			asyncSend(playerAddress, player.playerValue);
+
+		}
+	}
+
+	//@dev end current round, give top players the bonus and start the new one, only owner can.
+	function endRound(address playerTop1, address playerTop2, address playerTop3)
+		public
+		onlyOwner
+	{
+		require(now > endTime);
+		require(players[playerTop1].playerRound == round);
+		require(players[playerTop2].playerRound == round);
+		require(players[playerTop3].playerRound == round);
+		
+		//@dev end sure the top players are ended game
+		if(players[playerTop1].playerValue > players[playerTop2].playerValue && players[playerTop2].playerValue > players[playerTop3].playerValue) {
+
+			//@dev cut the top 1 player reward from current leader bonus price
+			uint256 bonusForPlayerTop1 = SafeMath.div(SafeMath.mul(currentLeaderBonusPrice, 50), 100);
+			asyncSend(playerTop1, bonusForPlayerTop1);
+
+			//@dev cut the top 2 player reward from current leader bonus price
+			uint256 bonusForPlayerTop2 = SafeMath.div(SafeMath.mul(currentLeaderBonusPrice, 30), 100);
+			asyncSend(playerTop2, bonusForPlayerTop2);
+
+			//@dev cut the top 3 player reward from current leader bonus price
+			uint256 bonusForPlayerTop3 = SafeMath.div(SafeMath.mul(currentLeaderBonusPrice, 20), 100);
+			asyncSend(playerTop3, bonusForPlayerTop3);
+			
+			//@dev reset current leader bonus price
+			currentLeaderBonusPrice = 0;
+			
+			//@dev go for new round
+			startNewRound();
+		}
+	}
+
+	//@dev start a new round, only owner can.
 	function startNewRound()
 		public
 		onlyOwner
@@ -33,16 +88,6 @@ contract FishCore is FishBase {
 
 		//emit started new round event
 		emit eventStartNewRound(round, endTime);
-	}
-
-	//@dev end current round and start the new one, only onwer can.
-	function endRound()
-		public
-		onlyOwner
-	{
-		require(now > endTime);
-		
-		startNewRound();
 	}
 	
 	//@dev create player to join this round.
@@ -78,6 +123,6 @@ contract FishCore is FishBase {
 		addTotalRoundPrice(player.playerValue);
 		
 		//@dev emit created player event
-		emit eventCreatePlayer(msg.sender);
+		emit eventCreatePlayer(msg.sender, player.playerValue);
     }
 }

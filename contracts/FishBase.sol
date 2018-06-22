@@ -13,13 +13,13 @@ contract FishBase is Ownable, PullPayment {
 	uint256 public round = 0;
 
 	//@dev this round's end time.
-	uint256 public endTime;
+	uint256 public endTime = 0;
 	
 	//@dev a round time. 15 minutes.
 	uint256 roundTime = 15 * 60;
 	
 	//@dev total round price
-	uint256 public totalRoundPrice = 0;
+	uint256 public totalRoundPrice = 0 ether;
 
 	//@dev Base price to join this game.
 	uint256 public basePrice = 0.01 ether;
@@ -41,7 +41,8 @@ contract FishBase is Ownable, PullPayment {
 
 	//@dev eventCreatePlayer event is emitted whenever a playe is created.
     event eventCreatePlayer(
-        address playerAddress
+        address playerAddress,
+		uint256 playerValue
     );
 	
 	//@dev When a Player is created, player can start joining this game's round
@@ -54,6 +55,7 @@ contract FishBase is Ownable, PullPayment {
 		
 		//@dev the player's value. It should start at 0.01 ether
         uint256 playerValue;
+
     }
 	
 	//@dev helper to get the dev fee of amount, current is 10%
