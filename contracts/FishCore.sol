@@ -9,59 +9,47 @@ contract FishCore is FishBase {
 	constructor() public {
 	}
 
-	//@dev end player game and transfer the reward, only owner .
-	//all players need update the value before can endRound()
-	function endPlayerGame(address playerAddress, uint256 playerValue)
+	//@dev end round, give top players the bonus and start the new game, only onwer can.
+	function endRound(address[] clientPlayers, uint256[] values)
 		public
 		onlyOwner
 	{
 		require(now > endTime);
-		require(playerValue > 0);
-		require(players[playerAddress].playerRound == round);
-
-		Player storage player = players[playerAddress];
-
-		//@dev check the player round and current playerValue
-		if(player.playerRound == round && player.playerValue >= playerValue) {
-			
-			//@dev update the player value and send reward
-			player.playerValue = playerValue;
-			asyncSend(playerAddress, player.playerValue);
-
-		}
-	}
-
-	//@dev end current round, give top players the bonus and start the new one, only owner can.
-	function endRound(address playerTop1, address playerTop2, address playerTop3)
-		public
-		onlyOwner
-	{
-		require(now > endTime);
-		require(players[playerTop1].playerRound == round);
-		require(players[playerTop2].playerRound == round);
-		require(players[playerTop3].playerRound == round);
 		
-		//@dev end sure the top players are ended game
-		if(players[playerTop1].playerValue > players[playerTop2].playerValue && players[playerTop2].playerValue > players[playerTop3].playerValue) {
-
+		//@dev update the player result from client into the contract
+		uint256 index = 0;
+        while (index < clientPlayers.length) {
+            if(players[clientPlayers[index]].playerRound == round) {
+				Player storage player = players[clientPlayers[index]];
+				//@dev update the player value and send reward
+				player.playerValue = values[index];
+				asyncSend(clientPlayers[index], values[index]);
+			}
+            index += 1;
+        }
+		//@dev give the top players reward from leader bonus
+		if(players[clientPlayers[0]].playerRound == round) {
 			//@dev cut the top 1 player reward from current leader bonus price
 			uint256 bonusForPlayerTop1 = SafeMath.div(SafeMath.mul(currentLeaderBonusPrice, 50), 100);
-			asyncSend(playerTop1, bonusForPlayerTop1);
-
+			asyncSend(clientPlayers[0], bonusForPlayerTop1);
+			currentLeaderBonusPrice = SafeMath.sub(currentLeaderBonusPrice, bonusForPlayerTop1);
+		}
+		if(players[clientPlayers[1]].playerRound == round) {
 			//@dev cut the top 2 player reward from current leader bonus price
 			uint256 bonusForPlayerTop2 = SafeMath.div(SafeMath.mul(currentLeaderBonusPrice, 30), 100);
-			asyncSend(playerTop2, bonusForPlayerTop2);
-
+			asyncSend(clientPlayers[1], bonusForPlayerTop2);
+			currentLeaderBonusPrice = SafeMath.sub(currentLeaderBonusPrice, bonusForPlayerTop2);
+		}
+		if(players[clientPlayers[2]].playerRound == round) {
 			//@dev cut the top 3 player reward from current leader bonus price
 			uint256 bonusForPlayerTop3 = SafeMath.div(SafeMath.mul(currentLeaderBonusPrice, 20), 100);
-			asyncSend(playerTop3, bonusForPlayerTop3);
-			
-			//@dev reset current leader bonus price
+			asyncSend(clientPlayers[2], bonusForPlayerTop3);
 			currentLeaderBonusPrice = 0;
-			
-			//@dev go for new round
-			startNewRound();
 		}
+
+		//@dev go for new round
+		startNewRound();
+		
 	}
 
 	//@dev start a new round, only owner can.
