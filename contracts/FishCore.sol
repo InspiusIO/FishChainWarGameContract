@@ -104,12 +104,13 @@ contract FishCore is FishBase {
 		
 		Player storage player = players[msg.sender];
 		
-		uint256 valueAfterFee = SafeMath.sub(msg.value, SafeMath.add(devFee, leaderBonusFee));
-		
-		//@dev reset player value for this round
+		//@dev reset player value and round for this round
 		if(player.playerRound != round) {
 			player.playerValue = 0;
+			player.playerRound = round;
 		}
+
+		uint256 valueAfterFee = SafeMath.sub(msg.value, SafeMath.add(devFee, leaderBonusFee));
 		
 		//@dev add the player value
 		player.playerValue = SafeMath.add(player.playerValue, valueAfterFee);
