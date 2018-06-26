@@ -65,6 +65,11 @@ contract FishCore is FishBase {
 		//@dev update round to new round
         round = SafeMath.add(round, 1);
 		
+		//@dev move the current leader bonus to next round bonus, in case number of players < 3
+		if(currentLeaderBonusPrice > 0) {
+			nextLeaderBonusPrice = SafeMath.add(nextLeaderBonusPrice, currentLeaderBonusPrice);
+		}
+
 		//@dev use next leader bonus price as current leader bonus price
 		currentLeaderBonusPrice = nextLeaderBonusPrice;
 		
