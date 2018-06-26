@@ -42,6 +42,7 @@ contract FishBase is Ownable, PullPayment {
 	//@dev eventCreatePlayer event is emitted whenever a playe is created.
     event eventCreatePlayer(
         address playerAddress,
+		uint256 playerRound,
 		uint256 playerValue
     );
 	

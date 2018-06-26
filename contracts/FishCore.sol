@@ -84,6 +84,9 @@ contract FishCore is FishBase {
         payable
         returns(uint256)
     {
+		//@dev owner can't play the game.
+		require(msg.sender != owner);
+
         createPlayer(msg.value);
     }
 	
@@ -119,7 +122,7 @@ contract FishCore is FishBase {
 		addTotalRoundPrice(player.playerValue);
 		
 		//@dev emit created player event
-		emit eventCreatePlayer(msg.sender, player.playerValue);
+		emit eventCreatePlayer(msg.sender, player.playerRound, player.playerValue);
     }
 	
 	//@dev fallback function to handle ethereum that was send straight to the contract
