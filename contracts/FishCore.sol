@@ -10,11 +10,12 @@ contract FishCore is FishBase {
 	}
 
 	//@dev end round, give top players the bonus and start the new game, only onwer can.
-	function endRound(address[] clientPlayers, uint256[] values)
+	function endRound(uint256 clientRound, address[] clientPlayers, uint256[] values)
 		public
 		onlyOwner
 	{
 		require(now > endTime);
+		require(clientRound == round);
 		
 		//@dev update the player result from client into the contract
 		uint256 index = 0;
