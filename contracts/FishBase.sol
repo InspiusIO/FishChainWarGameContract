@@ -33,6 +33,13 @@ contract FishBase is Ownable, PullPayment {
 	//@dev List of all players in this round.
     mapping(address => Player) internal players;
 
+	//@dev eventEndRound event is emitted whenever a new round is ended.
+    event eventEndRound(
+		uint256 currentRound,
+        address[] topPlayers, 
+		uint256[] topPlayersBonus
+    );
+
 	//@dev eventStartNewRound event is emitted whenever a new round is started.
     event eventStartNewRound(
         uint256 nextRound,

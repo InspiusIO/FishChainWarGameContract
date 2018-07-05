@@ -28,25 +28,36 @@ contract FishCore is FishBase {
 			}
             index += 1;
         }
+		address[] topPlayers;
+		uint256[] topPlayerBonusValues;
 		//@dev give the top players reward from leader bonus
 		if(index > 0 && players[clientPlayers[0]].playerRound == round) {
 			//@dev cut the top 1 player reward from current leader bonus price
 			uint256 bonusForPlayerTop1 = SafeMath.div(SafeMath.mul(currentLeaderBonusPrice, 50), 100);
 			asyncSend(clientPlayers[0], bonusForPlayerTop1);
+			topPlayers[topPlayers.length] = clientPlayers[0];
+			topPlayerBonusValues[topPlayerBonusValues.length] = bonusForPlayerTop1;
 			currentLeaderBonusPrice = SafeMath.sub(currentLeaderBonusPrice, bonusForPlayerTop1);
 		}
 		if(index > 1 && players[clientPlayers[1]].playerRound == round) {
 			//@dev cut the top 2 player reward from current leader bonus price
 			uint256 bonusForPlayerTop2 = SafeMath.div(SafeMath.mul(currentLeaderBonusPrice, 30), 100);
 			asyncSend(clientPlayers[1], bonusForPlayerTop2);
+			topPlayers[topPlayers.length] = clientPlayers[1];
+			topPlayerBonusValues[topPlayerBonusValues.length] = bonusForPlayerTop2;
 			currentLeaderBonusPrice = SafeMath.sub(currentLeaderBonusPrice, bonusForPlayerTop2);
 		}
 		if(index > 2 && players[clientPlayers[2]].playerRound == round) {
 			//@dev cut the top 3 player reward from current leader bonus price
 			uint256 bonusForPlayerTop3 = SafeMath.div(SafeMath.mul(currentLeaderBonusPrice, 20), 100);
 			asyncSend(clientPlayers[2], bonusForPlayerTop3);
+			topPlayers[topPlayers.length] = clientPlayers[2];
+			topPlayerBonusValues[topPlayerBonusValues.length] = bonusForPlayerTop3;
 			currentLeaderBonusPrice = 0;
 		}
+		
+		//emit started end round event
+		emit eventEndRound(round, topPlayers, topPlayerBonusValues);
 
 		//@dev go for new round
 		startNewRound();
