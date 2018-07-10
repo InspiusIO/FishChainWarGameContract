@@ -133,7 +133,7 @@ contract FishCore is FishBase {
 		player.playerValue = SafeMath.add(player.playerValue, valueAfterFee);
 		
 		//@dev add the value to this round
-		addTotalRoundPrice(player.playerValue);
+		addTotalRoundPrice( valueAfterFee );
 		
 		//@dev emit created player event
 		emit eventCreatePlayer(msg.sender, player.playerRound, player.playerValue);
