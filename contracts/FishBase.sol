@@ -32,13 +32,15 @@ contract FishBase is Ownable, PullPayment {
 
 	//@dev List of all players in this round.
     mapping(address => Player) internal players;
+	
+	//@dev last round player's reward index. To save gas for clear array
+	uint256 public lastRoundPlayerRewardIndex = 0;
 
-	//@dev eventEndRound event is emitted whenever a new round is ended.
-    event eventEndRound(
-		uint256 currentRound,
-        address[] topPlayers, 
-		uint256[] topPlayersBonus
-    );
+	//@dev last round players. All players are in last round.
+	address[] public lastRoundPlayers; 
+
+	//@dev last round rewards. All player's reward of last round.
+	uint256[] public lastRoundRewards;
 
 	//@dev eventStartNewRound event is emitted whenever a new round is started.
     event eventStartNewRound(
